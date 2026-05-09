@@ -93,3 +93,20 @@ workflows:
           requires:
             - update sandbox configuration
           filters: *on-push-main
+
+  deploy production role configuration:
+    jobs:
+      - update metrics-server deployment configuration:
+          name: update production configuration
+          context: *context
+          cluster-role: production
+          filters: *on-tag-main
+
+      - functional-tests:
+          name: test production clusters
+          context: *context
+          cluster: prod-i01-aws-us-east-2
+          cluster-role: production
+          requires:
+            - update production configuration
+          filters: *on-tag-main
