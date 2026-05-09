@@ -14,7 +14,7 @@ metrics_server_chart_version=$(jq -er .metrics_server_chart_version environments
 validate_argocore_helm_app_resource "$argocd_namespace" "metrics-server" "$metrics_server_chart_version"
 
 # run basic smoketest for service health
-bats test/services-state-test.bats
+bats test/metrics-server-service-check.bats
 
 # run horizontalpodautoscaler test to confirm metrics-server working health
 kubectl apply -f test/hpa-test-deployment.yaml

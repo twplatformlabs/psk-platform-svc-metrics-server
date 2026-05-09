@@ -73,7 +73,7 @@ jobs:
           cluster: << parameters.cluster >>
       - run:
           name: run integration test of metrics-server
-          command: bash scripts/integration_tests.yaml << parameters.cluster >> << parameters.cluster-role >>
+          command: bash scripts/integration_tests.sh << parameters.cluster >> << parameters.cluster-role >>
 
 workflows:
 
