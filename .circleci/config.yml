@@ -89,6 +89,7 @@ workflows:
           name: test sandbox clusters
           context: *context
           cluster: sbx-i01-aws-us-east-1
+          cluster-role: sandbox
           requires:
             - update sandbox configuration
           filters: *on-push-main
