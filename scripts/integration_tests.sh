@@ -4,7 +4,6 @@ source bash-functions.sh
 
 cluster=$1
 cluster_role=$2
-
 argocd_namespace=$(jq -er .argocd_namespace environments/$cluster_role.json)
 metrics_server_chart_version=$(jq -er .metrics_server_chart_version environments/$cluster_role.json)
 
