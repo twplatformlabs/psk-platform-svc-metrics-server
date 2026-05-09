@@ -28,8 +28,8 @@ spec:
       targetRevision: $metrics_server_chart_version
       helm:
         valueFiles:
-          - $config/roles/$cluster_role/metrics-server/default-values.yaml
-          - $config/roles/$cluster_role/metrics-server/$cluster_role-values.yaml
+          - \$config/roles/$cluster_role/metrics-server/default-values.yaml
+          - \$config/roles/$cluster_role/metrics-server/$cluster_role-values.yaml
     - repoURL: https://github.com/twplatformlabs/psk-aws-control-plane-configuration
       targetRevision: HEAD
       ref: config
