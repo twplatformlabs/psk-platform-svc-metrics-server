@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
 source bash-functions.sh
-
 
 cluster=$1
 cluster_role=$2
