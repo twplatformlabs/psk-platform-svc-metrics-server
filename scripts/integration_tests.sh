@@ -2,6 +2,9 @@
 set -euo pipefail
 source bash-functions.sh
 
+# the argocd core reconciliation loop runs every 3min
+sleep 180
+
 cluster=$1
 cluster_role=$2
 argocd_namespace=$(jq -er .argocd_namespace environments/$cluster_role.json)
