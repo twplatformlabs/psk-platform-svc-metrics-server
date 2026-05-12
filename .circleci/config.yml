@@ -1,9 +1,9 @@
 version: 2.1
 
 orbs:
-  kube: twdps/kube-ops@dev:alpha
+  kube: twdps/kube-ops@2.1.0
   op: twdps/onepassword@3.0.0
-  do: twdps/pipeline-events@dev:alpha
+  do: twdps/pipeline-events@5.4.0
 
 globals:
   - &context platform
@@ -78,6 +78,9 @@ jobs:
 workflows:
 
   deploy sandbox role configuration:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
       - update metrics-server deployment configuration:
           name: update sandbox configuration
@@ -110,3 +113,41 @@ workflows:
           requires:
             - update production configuration
           filters: *on-tag-main
+
+      - do/gh-release:
+          name: generate release notes
+          context: *context
+          notes-from-file: release.md
+          include-commit-msg: true
+          before-release:
+            - op/env:
+                env-file: op.prod-i01-aws-us-east-2.env
+          requires:
+            - test production clusters
+          filters: *on-tag-main
+
+      - do/schedule-pipeline:
+          name: schedule nightly integration tests
+          context: *context
+          scheduled-pipeline-name: nightly metrics-server functional test
+          scheduled-pipeline-description: |
+            Automatically triggers nightly run of functional-tests job
+          hours-of-day: "[1]"
+          days-of-week: "[\"SUN\"]"
+          before-schedule:
+            - op/env:
+                env-file: op.prod-i01-aws-us-east-2.env
+          filters: *on-tag-main
+
+  run nightly integration test:
+    when:
+      equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+    jobs:
+      - functional-tests:
+          name: nightly sbx-i01-aws-us-east-1 functional test
+          cluster: sbx-i01-aws-us-east-1
+          context: *context
+      - functional-tests:
+          name: nightly prod-i01-aws-us-east-2 functional test
+          cluster: prod-i01-aws-us-east-2
+          context: *context
