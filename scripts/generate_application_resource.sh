@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
+set -euo pipefail
+source bash-functions.sh
 
 cluster_role=$1
 
 metrics_server_chart_version=$(jq -er .metrics_server_chart_version environments/$cluster_role.json)
 argocd_namespace=$(jq -er .argocd_namespace environments/$cluster_role.json)
+
+# perform trivy scan of chart with role configuration.
+# ArgoCD Core will do the actual Helm install, this is just a pre-flight security review
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+helm repo update
+trivyScan "metrics-server/metrics-server" "metrics-server" "$metrics_server_chart_version" "deploy-templates/default-values.yaml"
 
 mkdir deploy-files
 

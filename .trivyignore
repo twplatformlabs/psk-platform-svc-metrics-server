@@ -1,0 +1,5 @@
+# external registry is allowed
+AVD-KSV-0125
+
+# argo managed deploy to kube-system
+AVD-KSV-0118
