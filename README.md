@@ -6,7 +6,7 @@
 	</p>
 </div>
 
-Release pipeline for Metrics-Server service on Labs AWS platform
+Release pipeline for metrics-server service on Labs AWS platform
 
 Define desired helm chart version and values setting for each cluster role.  
 
