@@ -7,7 +7,7 @@ orbs:
 
 globals:
   - &context platform
-  - &executor-image ghcr.io/twplatformlabs/circleci-eks-ops:alpine-2026.04.3
+  - &executor-image ghcr.io/twplatformlabs/circleci-eks-ops:alpine-2026.05
   - &config-repo twplatformlabs/psk-aws-control-plane-configuration
 
 on-push-main: &on-push-main
