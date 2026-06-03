@@ -1,4 +1,4 @@
 {
-  "metrics_server_chart_version": "3.13.1",
+  "metrics_server_chart_version": "3.13.0",
   "argocd_namespace": "psk-system"
 }
