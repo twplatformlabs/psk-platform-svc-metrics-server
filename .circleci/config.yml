@@ -147,8 +147,10 @@ workflows:
       - functional-tests:
           name: nightly sbx-i01-aws-us-east-1 functional test
           cluster: sbx-i01-aws-us-east-1
+          cluster-role: sandbox
           context: *context
       - functional-tests:
           name: nightly prod-i01-aws-us-east-2 functional test
           cluster: prod-i01-aws-us-east-2
+          cluster-role: production
           context: *context
